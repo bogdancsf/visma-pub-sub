@@ -1,4 +1,5 @@
-﻿using VismaPubSub.Derived;
+﻿using System;
+using VismaPubSub.Derived;
 
 namespace VismaPubSub
 {
@@ -16,9 +17,33 @@ namespace VismaPubSub
             ambulanceDepartment.Subscribe(dispatcher911);
             fireDepartment.Subscribe(dispatcher911);
 
-            dispatcher911.PublishEmergency(EmergencyType.Fire);
-            dispatcher911.PublishEmergency(EmergencyType.Medical);
-            dispatcher911.PublishEmergency(EmergencyType.Police);
+            var contactInfo = GetInput();
+
+            dispatcher911.PublishEmergency(BuildEmergency(EmergencyType.Fire, contactInfo));
+            dispatcher911.PublishEmergency(BuildEmergency(EmergencyType.Medical, contactInfo));
+            dispatcher911.PublishEmergency(BuildEmergency(EmergencyType.Police, contactInfo));
+        }
+
+        private static string GetInput()
+        {
+            Console.WriteLine("Type in address where emergency is taking place:");
+            var address = Console.ReadLine();
+
+            Console.WriteLine("\nType in phone number for contact:");
+            var phoneNumber = Console.ReadLine();
+
+            Console.WriteLine();
+
+            return $"Address: {address}; Phone number: {phoneNumber}";
+        }
+
+        private static Emergency BuildEmergency(EmergencyType type, string input)
+        {
+            return new Emergency
+            {
+                Type = type,
+                ContactInfo = input
+            };
         }
     }
 }

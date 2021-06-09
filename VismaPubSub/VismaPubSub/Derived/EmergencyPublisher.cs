@@ -3,13 +3,13 @@ using VismaPubSub.Base;
 
 namespace VismaPubSub.Derived
 {
-    public class EmergencyPublisher : Publisher<EmergencyType>
+    public class EmergencyPublisher : Publisher<Emergency>
     {
-        public void PublishEmergency(EmergencyType type)
+        public void PublishEmergency(Emergency emergency)
         {
-            Console.WriteLine($"Emergency of type '{type}' is being published'");
+            Console.WriteLine($"Emergency of type '{emergency.Type}' is being published'");
 
-            Publish(type);
+            Publish(emergency);
         }
     }
 }
